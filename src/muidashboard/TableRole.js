@@ -9,10 +9,11 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { BorderStyle, Height, Style } from "@mui/icons-material";
 import Checkbox from "@mui/material/Checkbox";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { collection, addDoc, Timestamp, updateDoc } from "firebase/firestore";
 import { db } from "../components/auth/firebase";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../muidashboard/TableRole.css";
+import { doc } from "firebase/firestore";
 
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
@@ -64,7 +65,7 @@ function createData(
   };
 }
 
-const rows = [
+const LocalRows = [
   createData("Dashboard"),
   createData("Users"),
   createData("Roles"),
@@ -72,15 +73,37 @@ const rows = [
   createData("Integration"),
 ];
 
-export default function TableRole({ onClose, open }) {
+export default function TableRole({ onClose, open, id, permissions }) {
   const [name, setName] = useState("");
-  const handleSubmit = async (e) => {
+
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    setRows(permissions === undefined ? LocalRows : permissions);
+  }, [permissions]);
+
+  const handleAdd = async (e) => {
     e.preventDefault();
     try {
       await addDoc(collection(db, "Roles"), {
         name: name,
         permissions: JSON.stringify(rows),
 
+        created: Timestamp.now(),
+      });
+      onClose();
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    const taskDocRef = doc(db, "Roles", id);
+    try {
+      await updateDoc(taskDocRef, {
+        title: name,
+        permissions: JSON.stringify(rows),
         created: Timestamp.now(),
       });
       onClose();
@@ -174,6 +197,7 @@ export default function TableRole({ onClose, open }) {
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       <Checkbox
+                        defaultChecked={row.create}
                         {...label}
                         onClick={(e) => {
                           row.create = e.target.checked;
@@ -183,6 +207,7 @@ export default function TableRole({ onClose, open }) {
 
                     <StyledTableCell align="center">
                       <Checkbox
+                        defaultChecked={row.view}
                         {...label}
                         onClick={(e) => {
                           row.view = e.target.checked;
@@ -191,6 +216,7 @@ export default function TableRole({ onClose, open }) {
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       <Checkbox
+                        defaultChecked={row.edit}
                         {...label}
                         onClick={(e) => {
                           row.edit = e.target.checked;
@@ -199,6 +225,7 @@ export default function TableRole({ onClose, open }) {
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       <Checkbox
+                        defaultChecked={row.isdeletepermissionavaialable}
                         {...label}
                         onClick={(e) => {
                           row.isdeletepermissionavaialable = e.target.checked;
@@ -207,6 +234,7 @@ export default function TableRole({ onClose, open }) {
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       <Checkbox
+                        defaultChecked={row.moderate}
                         {...label}
                         onClick={(e) => {
                           row.moderate = e.target.checked;
@@ -217,7 +245,11 @@ export default function TableRole({ onClose, open }) {
                 ))}
               </TableBody>
             </Table>
-            <button className="btn" type="submit" onClick={handleSubmit}>
+            <button
+              className="btn"
+              type="submit"
+              onClick={permissions === undefined ? handleAdd : handleUpdate}
+            >
               Done
             </button>
           </TableContainer>

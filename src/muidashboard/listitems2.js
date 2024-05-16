@@ -14,28 +14,14 @@ import { Link } from "react-router-dom";
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton
-      href="/DashB"
-      sx={{
-        "&:active": {
-          backgroundColor: "red",
-        },
-      }}
-    >
+    <ListItemButton href="/DashB">
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItemButton>
 
-    <ListItemButton
-      href="/Dashboard"
-      sx={{
-        "&:active": {
-          backgroundColor: "red",
-        },
-      }}
-    >
+    <ListItemButton href="/Dashboard">
       <ListItemIcon>
         <GroupIcon />
       </ListItemIcon>
@@ -57,14 +43,7 @@ export const mainListItems = (
       <ListItemText primary="Roles" />
     </ListItemButton>
 
-    <ListItemButton
-      href="/roles"
-      sx={{
-        "&:active": {
-          backgroundColor: "red",
-        },
-      }}
-    >
+    <ListItemButton href="/roles">
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>

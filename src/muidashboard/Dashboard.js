@@ -12,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import MenuItem from "@mui/material/MenuItem";
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -23,6 +24,7 @@ import Deposits from "./Deposits";
 import Orders from "./Orders";
 import EnhancedTable from "./EnhancedTableHead";
 import image from "../muidashboard/Untitled.png";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 
 function Copyright(props) {
   return (
@@ -101,7 +103,6 @@ export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
-    
   };
 
   return (
@@ -128,6 +129,7 @@ export default function Dashboard() {
             >
               <MenuIcon />
             </IconButton>
+
             <Typography
               component="h1"
               variant="h6"
@@ -139,6 +141,7 @@ export default function Dashboard() {
             >
               Users
             </Typography>
+            <AccountCircle />
             <IconButton color="inherit">
               <Badge color="">{/* <NotificationsIcon /> */}</Badge>
             </IconButton>

@@ -49,3 +49,12 @@
 .signup-form button:hover {
   background-color: #27ae60;
 }
+
+#email-error {
+  color: red;
+  margin-right: 100%;
+  left: 5px;
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 2%;
+}

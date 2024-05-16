@@ -1,8 +1,11 @@
 import React from "react";
 
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import Select from "@mui/material/Select";
+import ListItemText from "@mui/material/ListItemText";
 
 import CssBaseline from "@mui/material/CssBaseline";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
@@ -25,6 +28,7 @@ import Deposits from "./Deposits";
 import Orders from "./Orders";
 import EnhancedTable from "./EnhancedTableHead";
 import image from "../muidashboard/Untitled.png";
+import { ListItemIcon, MenuItem } from "@mui/material";
 
 const drawerWidth = 240;
 const AppBar = styled(MuiAppBar, {
@@ -115,8 +119,18 @@ function Header({ children }) {
                 flexGrow: 1,
               }}
             >
-              Users
+              Roles
             </Typography>
+            <Select>
+              <MenuItem value="">
+                <ListItemIcon>
+                  <AccountCircle />
+                </ListItemIcon>
+                <ListItemText primary="Inbox" />
+              </MenuItem>
+              <MenuItem value={10}>Ten</MenuItem>
+            </Select>
+
             <IconButton color="inherit">
               <Badge color="">{/* <NotificationsIcon /> */}</Badge>
             </IconButton>

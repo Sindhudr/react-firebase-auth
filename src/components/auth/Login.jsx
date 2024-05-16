@@ -23,9 +23,23 @@ const Login = () => {
     }
   };
 
+  var emailfield = document.getElementById("email-field");
+  var emailError = document.getElementById("email-error");
+
+  function validateEmail() {
+    if (
+      !emailfield.value.match(/^[A-Za-z\._\-0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/)
+    ) {
+      emailError.innerHTML = "please enter valid email";
+      return false;
+    }
+    emailError.innerHTML = "";
+    return true;
+  }
+
   useEffect(() => {}, []);
   if (isLoggedIn) {
-    return <Navigate to="/Dashboard" />;
+    return <Navigate to="/DashB" />;
   }
 
   return (
@@ -37,14 +51,19 @@ const Login = () => {
           <input
             type="text"
             placeholder="Email"
+            required
             onChange={(e) => setEmail(e.target.value)}
+            id="email-field"
+            onKeyUp={validateEmail()}
           />
+          <span id="email-error"></span>
         </label>
         <label htmlFor="Password">
           Password:
           <input
             type="Password"
             placeholder="Password"
+            required
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>

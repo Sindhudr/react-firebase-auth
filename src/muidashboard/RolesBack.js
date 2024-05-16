@@ -24,6 +24,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
@@ -227,6 +228,7 @@ export default function EnhancedTable1() {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [openAddModal, setOpenAddModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
   const [selectedindex, setSelectedIndex] = useState(0);
   const [open, setOpen] = useState({ edit: false, view: false });
   const [refreshstatus, setRefreshStatus] = useState(true);
@@ -262,7 +264,7 @@ export default function EnhancedTable1() {
   }, []);
 
   async function handleDelete(index) {
-    const taskDocRef = doc(db, "Users", roles[index].id);
+    const taskDocRef = doc(db, "Roles", roles[index].id);
     try {
       await deleteDoc(taskDocRef);
       setRefreshStatus(true);
@@ -411,8 +413,14 @@ export default function EnhancedTable1() {
                           string +=
                             ":" +
                             `${permission.create ? " Create, " : ""}` +
-                            `${permission.view ? "View" : ""}` +
-                            `${"\n\n"}`;
+                            `${permission.view ? " View," : ""}` +
+                            `${permission.edit ? " Edit," : ""}` +
+                            `${permission.moderate ? " Moderate," : ""}` +
+                            `${
+                              permission.isdeletepermissionavaialable
+                                ? " Delete,"
+                                : ""
+                            }`;
                           return (string += "\n");
                         })}
                       </TableCell>
@@ -420,10 +428,10 @@ export default function EnhancedTable1() {
                         <Box
                           sx={{
                             display: "flex",
-                            justifyContent: "space-between",
+                            justifyContent: "space-around",
                           }}
                         >
-                          <VisibilityIcon
+                          {/* <VisibilityIcon
                             className="VI"
                             al
                             style={{
@@ -433,11 +441,14 @@ export default function EnhancedTable1() {
                               setSelectedIndex(index);
                               setOpen({ ...open, view: true });
                             }}
-                          />
+                          /> */}
 
                           <EditIcon
                             style={{ color: "red" }}
-                            onClick={() => setOpen({ ...open, edit: true })}
+                            onClick={() => {
+                              setSelectedIndex(index);
+                              setOpen({ edit: true, view: false });
+                            }}
                           />
                           <DeleteOutlineIcon
                             style={{ color: "red" }}
@@ -449,18 +460,18 @@ export default function EnhancedTable1() {
                         <TaskItem
                           onClose={handleClose}
                           title={roles[selectedindex].name}
-                          permission={roles[selectedindex].permission}
+                          permission={roles[selectedindex].permissions}
                           open={open.view}
                           // email={users[selectedindex].email}
                           // designation={users[selectedindex].designation}
                         />
                       )}
                       {open.edit && (
-                        <EditTask
+                        <TableRole
                           onClose={handleClose}
-                          toEditTitle={roles[selectedindex].title}
                           open={open.edit}
                           id={roles[selectedindex].id}
+                          permissions={roles[selectedindex].permissions}
                           // email={users[selectedindex].email}
                           // designation={users[selectedindex].designation}
                         />

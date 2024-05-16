@@ -28,6 +28,7 @@ const SignUp = () => {
           <input
             type="text"
             placeholder="Email"
+            required
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
@@ -36,6 +37,7 @@ const SignUp = () => {
           <input
             type="password"
             placeholder="Password"
+            required
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>

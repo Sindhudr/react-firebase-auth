@@ -36,8 +36,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import TaskItem from "../users/TaskItem";
 import navigate from "../muidashboard/navigate";
 
-
-
 import EditTask from "../users/EditTask";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import TableRole from "./TableRole";
@@ -72,8 +70,6 @@ function getComparator(order, orderBy) {
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
-
-
 
 // Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
 // stableSort() brings sort stability to non-modern browsers (notably IE11). If you
@@ -339,7 +335,6 @@ export default function EnhancedTable() {
     setSelected(newSelected);
   };
 
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -372,7 +367,7 @@ export default function EnhancedTable() {
     <Box sx={{ width: "100%", mb: 2, mt: 1, md: 4, lg: 3 }}>
       <Button
         sx={{
-          width: "40px",
+          width: "9%",
           color: "white",
           backgroundColor: "red",
           marginLeft: "91%",
@@ -446,7 +441,12 @@ export default function EnhancedTable() {
                     <TableCell align="center">{row.data.role}</TableCell>
 
                     <TableCell align="center">
-                      <div>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
                         <VisibilityIcon
                           al
                           style={{
@@ -465,7 +465,7 @@ export default function EnhancedTable() {
                           style={{ color: "red" }}
                           onClick={(event) => handleDelete(index)}
                         />
-                      </div>
+                      </Box>
                     </TableCell>
 
                     {open.view && (
